@@ -1,0 +1,25 @@
+{% extends "encyclopedia/layout.html" %}
+
+{% block title %}
+    Search
+{% endblock %}
+
+{% block body %}
+
+    <h1>Search</h1>
+
+
+    {% if substrings %}
+        <p>Your search did not return exact matches.</p>
+        <p>There are some results below containing your request for "{{ query }}" that might help you.</p>
+
+        {% for string in substrings %}
+            <li><a href="/wiki/{{ string }}">{{ string }}</a></li>
+        {% endfor %}
+    {% endif %}
+
+    {% if not_found %}
+        <p>Your query for "{{ query }}" didn't return any results.</p>
+    {% endif %}
+
+{% endblock %}
