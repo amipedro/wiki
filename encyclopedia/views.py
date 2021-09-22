@@ -71,11 +71,28 @@ def search(request):
 
 def create(request):
 
+    # Read form for a Post request
     if request.method == "POST":
         title = request.POST.get('title')
-        text = request.POST.get('text')
-        print(title)
-        print(text)
+        content = request.POST.get('content')
+
+        # List of entries
+        entries = util.list_entries()
+        
+        # Conditional sintax for posting information
+        # Shows a error message in case the entry already exists.
+        if title.lower() in (entry.lower() for entry in entries):
+            
+            message = "The content you tried to save already exists."
+
+            return render(request, "encyclopedia/create.html", {
+                "message": message,
+                "title": title
+            })
+        # Allows the user to save content to website "database"
+        else:
+            util.save_entry(title, content)
+            return HttpResponseRedirect(f"wiki/{title}")
 
 
     return render(request, "encyclopedia/create.html")
