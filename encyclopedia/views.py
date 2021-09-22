@@ -68,3 +68,14 @@ def search(request):
                     "not_found": not_found,
                     "query": query
                 })
+
+def create(request):
+
+    if request.method == "POST":
+        title = request.POST.get('title')
+        text = request.POST.get('text')
+        print(title)
+        print(text)
+
+
+    return render(request, "encyclopedia/create.html")
