@@ -94,5 +94,10 @@ def create(request):
             util.save_entry(title, content)
             return HttpResponseRedirect(f"wiki/{title}")
 
+    else:
+        return render(request, "encyclopedia/create.html")
 
-    return render(request, "encyclopedia/create.html")
+def edit(request):
+
+    return render(request, "edit.html")
+    
