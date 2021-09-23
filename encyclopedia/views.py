@@ -6,7 +6,7 @@ import markdown2 as mk
 
 from django.http import HttpResponse
 from django.urls import reverse
-
+import random as rd
 
 def index(request):
     return render(request, "encyclopedia/index.html", {
@@ -100,4 +100,11 @@ def create(request):
 def edit(request):
 
     return render(request, "edit.html")
-    
+
+
+# Redirect to a random page
+def random(request):
+
+    rand = rd.choice(util.list_entries())
+
+    return HttpResponseRedirect(f"wiki/{rand}")
