@@ -13,6 +13,7 @@ def index(request):
         "entries": util.list_entries()
     })
 
+# Get a entry inside entries
 def entry(request, entry):
     # Get page content
     content = util.get_entry(entry)
@@ -32,6 +33,7 @@ def entry(request, entry):
             "name": entry
         })
 
+# Search for a page
 def search(request):
     if request.method == "GET":
         # Get query from searchbar
@@ -69,6 +71,7 @@ def search(request):
                     "query": query
                 })
 
+# Create a new page
 def create(request):
 
     # Read form for a Post request
@@ -97,9 +100,25 @@ def create(request):
     else:
         return render(request, "encyclopedia/create.html")
 
-def edit(request):
+# Edit a page
+def edit(request, entry):
 
-    return render(request, "edit.html")
+    # Load a page from entries and loads it to text area
+    if request.method == "GET":
+        content = util.get_entry(entry)
+
+        return render(request, "encyclopedia/edit.html", {
+            "entry": entry,
+            "content": content
+        })
+    
+    # Save the editted content to entries
+    if request.method == "POST":
+
+        content = request.POST.get('content')
+        util.save_entry(entry, content)
+
+        return HttpResponseRedirect(f"/wiki/{entry}")
 
 
 # Redirect to a random page
